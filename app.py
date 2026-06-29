@@ -62,6 +62,7 @@ with st.sidebar:
     st.markdown("---")
     st.success("Ứng dụng phân tích cổ phiếu")
     if menu == "📋 Thông tin đầu vào":
+        
     st.markdown(
         "<script>window.location.hash='input';</script>",
         unsafe_allow_html=True

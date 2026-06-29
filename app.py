@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 import sqlite3
 import os
-import sqlite3
 
 # =============================
 # CẤU HÌNH TRANG
@@ -22,16 +21,57 @@ st.set_page_config(
 # LOGO
 # =============================
 st.image("logo.jpg")
+
+# =============================
+# DATABASE
+# =============================
+conn = sqlite3.connect(
+    "members.db",
+    check_same_thread=False
+)
+
+c = conn.cursor()
+
+# Bảng thành viên
+c.execute("""
+CREATE TABLE IF NOT EXISTS members(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    role TEXT,
+    bio TEXT,
+    color TEXT
+)
+""")
+
+# Bảng lịch sử phân tích
+c.execute("""
+CREATE TABLE IF NOT EXISTS history(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticker TEXT,
+    analysis_date TEXT
+)
+""")
+
+conn.commit()
+
 # =============================
 # TIÊU ĐỀ
 # =============================
-st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
-st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
+st.title(
+    "📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL"
+)
+
+st.subheader(
+    "HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9"
+)
+
+# =============================
+# DASHBOARD
+# =============================
 st.markdown("---")
 
 col1, col2, col3 = st.columns(3)
 
-c = conn.cursor()
 # Tổng thành viên
 c.execute("SELECT COUNT(*) FROM members")
 tong_tv = c.fetchone()[0]
@@ -40,7 +80,7 @@ tong_tv = c.fetchone()[0]
 c.execute("SELECT COUNT(*) FROM history")
 tong_pt = c.fetchone()[0]
 
-# Mã cổ phiếu phổ biến nhất
+# Mã được phân tích nhiều nhất
 c.execute("""
 SELECT ticker, COUNT(*)
 FROM history
@@ -68,34 +108,10 @@ col3.metric(
     ma_hot
 )
 
+# =============================
+# BỐ CỤC CHÍNH
+# =============================
 main_col, profile_col = st.columns([4, 1])
-
-with profile_col:
-
-    st.subheader("👥 Thành viên")
-
-    with st.expander("➕ Thêm thành viên"):
-
-        name = st.text_input("Họ tên")
-        role = st.text_input("Vai trò")
-        bio = st.text_area("Chức vụ")
-        color = st.color_picker(
-    "Chọn màu hồ sơ",
-    "#4CAF50"
-)
-
-        if st.button("💾 Lưu hồ sơ"):
-
-            c.execute(
-                "INSERT INTO members(name, role, bio) VALUES (?, ?, ?)",
-                (name, role, bio)
-            )
-
-            conn.commit()
-
-            st.success("Đã lưu thành công!")
-
-    st.markdown("---")
 
     # =============================
 # DATABASE THÀNH VIÊN

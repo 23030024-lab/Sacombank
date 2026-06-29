@@ -43,24 +43,6 @@ with st.sidebar:
     )
 
 st.markdown("---")
-# =============================
-# MỤC LỤC SIDEBAR
-# =============================
-with st.sidebar:
-    st.title("☰")
-
-    st.subheader("MỤC LỤC")
-
-    st.markdown("""
-    - 📋 Thông tin đầu vào
-    - 📄 Dữ liệu
-    - 📈 Giá đóng cửa và Log Return
-    - 🕯️ Biểu đồ nến
-    - 📊 Kết quả Mann-Kendall
-    """)
-
-    st.markdown("---")
-    st.success("Ứng dụng phân tích cổ phiếu")
     if menu == "📋 Thông tin đầu vào":
         st.markdown(
             "<script>window.location.hash='input';</script>",

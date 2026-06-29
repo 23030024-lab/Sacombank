@@ -63,15 +63,15 @@ with st.sidebar:
     st.success("Ứng dụng phân tích cổ phiếu")
     if menu == "📋 Thông tin đầu vào":
         st.markdown(
-        "<script>window.location.hash='input';</script>",
-        unsafe_allow_html=True
-    )
+            "<script>window.location.hash='input';</script>",
+            unsafe_allow_html=True
+        )
 
-elif menu == "📄 Dữ liệu":
-    st.markdown(
-        "<script>window.location.hash='data';</script>",
-        unsafe_allow_html=True
-    )
+    elif menu == "📄 Dữ liệu":
+        st.markdown(
+            "<script>window.location.hash='data';</script>",
+            unsafe_allow_html=True
+        )
 
 elif menu == "📈 Giá đóng cửa và Log Return":
     st.markdown(

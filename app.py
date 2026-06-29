@@ -41,7 +41,7 @@ with st.sidebar:
             "📊 Kết quả Mann-Kendall"
         ]
         )
-        st.markdown("---")
+st.markdown("---")
     if menu == "📋 Thông tin đầu vào":
         st.markdown(
             "<script>window.location.hash='input';</script>",

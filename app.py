@@ -155,8 +155,6 @@ st.subheader("👥 Danh sách thành viên")
 
 cols = st.columns(3)   # 3 hồ sơ trên 1 hàng
 
-st.write(row)
-
 for idx, row in enumerate(rows):
 
     with cols[idx % 3]:

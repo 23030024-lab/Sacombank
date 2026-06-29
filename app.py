@@ -6,6 +6,8 @@ import pymannkendall as mk
 import matplotlib.pyplot as plt
 import mplfinance as mpf
 import sqlite3
+import os
+import sqlite3
 
 # =============================
 # CẤU HÌNH TRANG
@@ -53,6 +55,10 @@ with profile_col:
         name = st.text_input("Họ tên")
         role = st.text_input("Vai trò")
         bio = st.text_area("Chức vụ")
+        color = st.color_picker(
+    "Chọn màu hồ sơ",
+    "#4CAF50"
+)
 
         if st.button("💾 Lưu hồ sơ"):
 
@@ -67,13 +73,121 @@ with profile_col:
 
     st.markdown("---")
 
+    # =============================
+# DATABASE THÀNH VIÊN
+# =============================
+
+conn = sqlite3.connect(
+    "members.db",
+    check_same_thread=False
+)
+
+c = conn.cursor()
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS members(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    role TEXT,
+    bio TEXT,
+    color TEXT
+)
+""")
+
+conn.commit()
+# =============================
+# QUẢN LÝ THÀNH VIÊN
+# =============================
+
+st.sidebar.markdown("---")
+st.sidebar.header("👥 Thành viên")
+
+with st.sidebar.expander("➕ Thêm thành viên"):
+
+    tv_name = st.text_input("Họ tên")
+
+    tv_role = st.selectbox(
+        "Chức vụ",
+        [
+            "👑 Trưởng nhóm",
+            "💻 Lập trình viên",
+            "📊 Phân tích dữ liệu",
+            "⭐ Thành viên"
+        ]
+    )
+
+    tv_bio = st.text_area("Tiểu sử")
+
+    tv_color = st.color_picker(
+        "Màu hồ sơ",
+        "#4CAF50"
+    )
+
+    if st.button("💾 Lưu thành viên"):
+
+        if tv_name != "":
+
+            c.execute(
+                """
+                INSERT INTO members
+                (name, role, bio, color)
+                VALUES (?, ?, ?, ?)
+                """,
+                (
+                    tv_name,
+                    tv_role,
+                    tv_bio,
+                    tv_color
+                )
+            )
+
+            conn.commit()
+
+            st.success("Đã lưu!")
+
+            st.rerun()
+
     # Hiển thị tất cả thành viên
     c.execute("SELECT * FROM members")
     rows = c.fetchall()
 
-    for row in rows:
+   st.subheader("👥 Danh sách thành viên")
 
-        with st.expander(f"👤 {row[1]}"):
+cols = st.columns(3)   # 3 hồ sơ trên 1 hàng
+
+for idx, row in enumerate(rows):
+
+    with cols[idx % 3]:
+
+        st.markdown(
+            f"""
+            <div style="
+                background-color:{row[4]};
+                padding:15px;
+                border-radius:15px;
+                text-align:center;
+                min-height:250px;
+                box-shadow:2px 2px 8px rgba(0,0,0,0.2);
+            ">
+                <h3>{row[1]}</h3>
+                <h4>{row[2]}</h4>
+                <p>{row[3]}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        if st.button(
+            f"🗑️ Xóa {row[1]}",
+            key=f"delete_{row[0]}"
+        ):
+            c.execute(
+                "DELETE FROM members WHERE id=?",
+                (row[0],)
+            )
+
+            conn.commit()
+            st.rerun()
 
             st.write("**Vai trò:**", row[2])
             st.write(row[3])
@@ -143,6 +257,61 @@ elif menu == "📊 Kết quả Mann-Kendall":
 # =============================
 st.markdown('<div id="input"></div>', unsafe_allow_html=True)
 st.header("📋 Thông tin đầu vào")
+# =============================
+# DANH SÁCH THÀNH VIÊN
+# =============================
+
+st.subheader("👥 Nhóm thực hiện")
+
+c.execute("""
+SELECT * FROM members
+ORDER BY id
+""")
+
+members = c.fetchall()
+
+if members:
+
+    cols = st.columns(3)
+
+    for idx, member in enumerate(members):
+
+        with cols[idx % 3]:
+
+            st.markdown(
+                f"""
+                <div style="
+                    background-color:{member[4]};
+                    padding:20px;
+                    border-radius:15px;
+                    text-align:center;
+                    min-height:250px;
+                    color:white;
+                ">
+                    <h3>{member[1]}</h3>
+                    <h4>{member[2]}</h4>
+                    <p>{member[3]}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            if st.button(
+                f"🗑️ Xóa",
+                key=f"del_{member[0]}"
+            ):
+
+                c.execute(
+                    """
+                    DELETE FROM members
+                    WHERE id=?
+                    """,
+                    (member[0],)
+                )
+
+                conn.commit()
+
+                st.rerun()
 
 ticker = st.text_input(
     "Mã cổ phiếu",

@@ -391,19 +391,19 @@ if run:
     .rolling(50)
     .mean()
     )
-                delta = df["Close"].diff()
+    delta = df["Close"].diff()
 
-                gain = delta.where(delta > 0, 0)
+    gain = delta.where(delta > 0, 0)
 
-                loss = -delta.where(delta < 0, 0)
+    loss = -delta.where(delta < 0, 0)
 
-                avg_gain = gain.rolling(14).mean()
+    avg_gain = gain.rolling(14).mean()
 
-                avg_loss = loss.rolling(14).mean()
+    avg_loss = loss.rolling(14).mean()
 
-                rs = avg_gain / avg_loss
+    rs = avg_gain / avg_loss
 
-                df["RSI"] = 100 - (100 / (1 + rs))
+    df["RSI"] = 100 - (100 / (1 + rs))
 
     # =============================
     # HIỂN THỊ DỮ LIỆU

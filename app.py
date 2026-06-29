@@ -385,9 +385,6 @@ if run:
         linewidth=2,
         label="Close Price"
     )
-    color="red",
-    linewidth=2,
-    label="Close Price"
     
     ax[0].plot(
         df.index,
@@ -421,10 +418,10 @@ if run:
     ax[1].legend()
     ax[1].grid(True)
 
-plt.tight_layout()
+    plt.tight_layout()
 
-st.pyplot(fig)
-st.subheader("📊 Chỉ báo RSI")
+    st.pyplot(fig)
+    st.subheader("📊 Chỉ báo RSI")
 
 fig_rsi, ax_rsi = plt.subplots(
     figsize=(10,4)

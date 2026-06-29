@@ -384,13 +384,13 @@ if run:
     df["Close"]
     .rolling(20)
     .mean()
-)
+    )
 
-df["MA50"] = (
+    df["MA50"] = (
     df["Close"]
     .rolling(50)
     .mean()
-)
+    )
 delta = df["Close"].diff()
 
 gain = delta.where(delta > 0, 0)

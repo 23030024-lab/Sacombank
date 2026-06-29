@@ -26,6 +26,46 @@ st.image("logo.jpg")
 st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
 st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
 # =============================
+# HỒ SƠ THÀNH VIÊN CÓ THỂ CHỈNH SỬA TRÊN WEB
+# =============================
+
+with st.expander("👤 Hồ sơ thành viên", expanded=False):
+
+    # Tải ảnh từ máy tính
+    uploaded_photo = st.file_uploader(
+        "Tải ảnh đại diện",
+        type=["jpg", "jpeg", "png"]
+    )
+
+    # Nhập thông tin
+    member_name = st.text_input(
+        "Họ và tên",
+        value="HUỲNH THỊ NGỌC TIÊN"
+    )
+
+    member_role = st.text_input(
+        "Vai trò",
+        value="Phát triển ứng dụng"
+    )
+
+    member_bio = st.text_area(
+        "Tiểu sử",
+        value="""
+Sinh viên ngành Công nghệ thông tin.
+Yêu thích Python, phân tích dữ liệu và chứng khoán.
+"""
+    )
+
+    st.markdown("---")
+    st.subheader("📌 Xem trước hồ sơ")
+
+    if uploaded_photo is not None:
+        st.image(uploaded_photo, width=300)
+
+    st.markdown(f"### {member_name}")
+    st.write("**Vai trò:**", member_role)
+    st.write(member_bio)
+# =============================
 # MỤC LỤC TƯƠNG TÁC
 # =============================
 with st.sidebar:
@@ -42,68 +82,6 @@ with st.sidebar:
         ]
         )
 st.markdown("---")
-# =============================
-# PROFILE THÀNH VIÊN
-# =============================
-
-with st.expander("👥 Thông tin thành viên", expanded=False):
-
-    member = st.selectbox(
-        "Chọn thành viên",
-        [
-            "HUỲNH THỊ NGỌC TIÊN",
-            "NGUYỄN VĂN A",
-            "TRẦN THỊ B"
-        ]
-    )
-
-    if member == "HUỲNH THỊ NGỌC TIÊN":
-        st.image("", width=300)
-
-        st.markdown("""
-        ### 👩 HUỲNH THỊ NGỌC TIÊN
-
-        - **MSSV:** 123456789
-        - **Lớp:** CNTT K46
-        - **Vai trò:** Xây dựng ứng dụng Streamlit
-        - **Email:** tien@example.com
-
-        #### 📌 Tiểu sử
-
-        Sinh viên ngành Công nghệ thông tin.
-        Yêu thích phân tích dữ liệu, lập trình Python
-        và nghiên cứu thị trường chứng khoán.
-        """)
-
-    elif member == "NGUYỄN VĂN A":
-        st.image("", width=300)
-
-        st.markdown("""
-        ### 👨 NGUYỄN VĂN A
-
-        - **MSSV:** 987654321
-        - **Lớp:** CNTT K46
-        - **Vai trò:** Thu thập dữ liệu
-
-        #### 📌 Tiểu sử
-
-        Yêu thích khoa học dữ liệu và phát triển web.
-        """)
-
-    elif member == "TRẦN THỊ B":
-        st.image("", width=300)
-
-        st.markdown("""
-        ### 👩 TRẦN THỊ B
-
-        - **MSSV:** 111222333
-        - **Lớp:** CNTT K46
-        - **Vai trò:** Phân tích thống kê
-
-        #### 📌 Tiểu sử
-
-        Có kinh nghiệm trong phân tích dữ liệu tài chính.
-        """)
 if menu == "📋 Thông tin đầu vào":
     st.markdown(
         "<script>window.location.hash='input';</script>",

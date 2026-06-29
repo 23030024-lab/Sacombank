@@ -162,7 +162,7 @@ for idx, row in enumerate(rows):
         st.markdown(
             f"""
             <div style="
-                background-color:{row[4]};
+                background-color:{row[4] if len(row) > 4 else "#4CAF50"};
                 padding:15px;
                 border-radius:15px;
                 text-align:center;

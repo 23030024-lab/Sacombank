@@ -42,6 +42,68 @@ with st.sidebar:
         ]
         )
 st.markdown("---")
+# =============================
+# PROFILE THÀNH VIÊN
+# =============================
+
+with st.expander("👥 Thông tin thành viên", expanded=False):
+
+    member = st.selectbox(
+        "Chọn thành viên",
+        [
+            "HUỲNH THỊ NGỌC TIÊN",
+            "NGUYỄN VĂN A",
+            "TRẦN THỊ B"
+        ]
+    )
+
+    if member == "HUỲNH THỊ NGỌC TIÊN":
+        st.image("tien.jpg", width=300)
+
+        st.markdown("""
+        ### 👩 HUỲNH THỊ NGỌC TIÊN
+
+        - **MSSV:** 123456789
+        - **Lớp:** CNTT K46
+        - **Vai trò:** Xây dựng ứng dụng Streamlit
+        - **Email:** tien@example.com
+
+        #### 📌 Tiểu sử
+
+        Sinh viên ngành Công nghệ thông tin.
+        Yêu thích phân tích dữ liệu, lập trình Python
+        và nghiên cứu thị trường chứng khoán.
+        """)
+
+    elif member == "NGUYỄN VĂN A":
+        st.image("an.jpg", width=300)
+
+        st.markdown("""
+        ### 👨 NGUYỄN VĂN A
+
+        - **MSSV:** 987654321
+        - **Lớp:** CNTT K46
+        - **Vai trò:** Thu thập dữ liệu
+
+        #### 📌 Tiểu sử
+
+        Yêu thích khoa học dữ liệu và phát triển web.
+        """)
+
+    elif member == "TRẦN THỊ B":
+        st.image("minh.jpg", width=300)
+
+        st.markdown("""
+        ### 👩 TRẦN THỊ B
+
+        - **MSSV:** 111222333
+        - **Lớp:** CNTT K46
+        - **Vai trò:** Phân tích thống kê
+
+        #### 📌 Tiểu sử
+
+        Có kinh nghiệm trong phân tích dữ liệu tài chính.
+        """)
 if menu == "📋 Thông tin đầu vào":
     st.markdown(
         "<script>window.location.hash='input';</script>",

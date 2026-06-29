@@ -42,7 +42,7 @@ with st.sidebar:
         ]
         )
 st.markdown("---")
-    if menu == "📋 Thông tin đầu vào":
+if menu == "📋 Thông tin đầu vào":
 st.markdown(
             "<script>window.location.hash='input';</script>",
             unsafe_allow_html=True

@@ -24,9 +24,27 @@ st.image("logo.jpg")
 # TIÊU ĐỀ
 # =============================
 st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
-st.subheader("TS. VŨ ĐỨC BÌNH")
+st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
 
 st.markdown("---")
+# =============================
+# MỤC LỤC SIDEBAR
+# =============================
+with st.sidebar:
+    st.title("☰")
+
+    st.subheader("MỤC LỤC")
+
+    st.markdown("""
+    - 📋 Thông tin đầu vào
+    - 📄 Dữ liệu
+    - 📈 Giá đóng cửa và Log Return
+    - 🕯️ Biểu đồ nến
+    - 📊 Kết quả Mann-Kendall
+    """)
+
+    st.markdown("---")
+    st.success("Ứng dụng phân tích cổ phiếu")
 
 # =============================
 # THÔNG TIN ĐẦU VÀO (DẠNG DỌC)

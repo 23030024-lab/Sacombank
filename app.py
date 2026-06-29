@@ -388,7 +388,7 @@ if run:
     color="red",
     linewidth=2,
     label="Close Price"
-    )
+    
     ax[0].plot(
         df.index,
         df["MA20"],

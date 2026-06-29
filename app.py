@@ -154,7 +154,7 @@ with st.sidebar.expander("➕ Thêm thành viên"):
 st.subheader("👥 Danh sách thành viên")
 
 cols = st.columns(3)   # 3 hồ sơ trên 1 hàng
-
+st.write(len(row))
 for idx, row in enumerate(rows):
 
     with cols[idx % 3]:

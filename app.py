@@ -41,7 +41,6 @@ with st.sidebar:
             "📊 Kết quả Mann-Kendall"
         ]
         )
-
         st.markdown("---")
     if menu == "📋 Thông tin đầu vào":
         st.markdown(

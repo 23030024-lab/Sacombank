@@ -408,11 +408,11 @@ if run:
     # =============================
     # HIỂN THỊ DỮ LIỆU
     # =============================
-st.markdown('<div id="data"></div>', unsafe_allow_html=True)
-st.subheader("📄 Dữ liệu")
-st.dataframe(df)
-csv = df.to_csv().encode("utf-8")
-st.download_button(
+    st.markdown('<div id="data"></div>', unsafe_allow_html=True)
+    st.subheader("📄 Dữ liệu")
+    st.dataframe(df)
+    csv = df.to_csv().encode("utf-8")
+    st.download_button(
     "📥 Tải dữ liệu CSV",
     data=csv,
     file_name="du_lieu_co_phieu.csv",

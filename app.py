@@ -432,26 +432,26 @@ fig, ax = plt.subplots(
         sharex=True
 )
 
-        ax[0].plot(
-            df.index,
-            df["Close"],
-            color="red",
-            linewidth=2,
-            label="Close Price"
-        )
-        ax[0].plot(
-            df.index,
-            df["MA20"],
-            linewidth=2,
-            label="MA20"
-        )
+    ax[0].plot(
+        df.index,
+        df["Close"],
+        color="red",
+        linewidth=2,
+        label="Close Price"
+    )
+    ax[0].plot(
+        df.index,
+        df["MA20"],
+        linewidth=2,
+        label="MA20"
+    )
 
-        ax[0].plot(
-            df.index,
-            df["MA50"],
-            linewidth=2,
-            label="MA50"
-        )
+    ax[0].plot(
+        df.index,
+        df["MA50"],
+        linewidth=2,
+        label="MA50"
+    )
 
 ax[0].set_title("Giá đóng cửa")
 ax[0].set_ylabel("VND")

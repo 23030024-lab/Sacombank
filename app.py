@@ -28,22 +28,6 @@ st.image("logo.jpg")
 st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
 st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
 
-# =============================
-# KẾT NỐI SQLITE
-# =============================
-conn = sqlite3.connect("members.db", check_same_thread=False)
-c = conn.cursor()
-
-c.execute("""
-CREATE TABLE IF NOT EXISTS members (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    role TEXT,
-    bio TEXT
-)
-""")
-
-conn.commit()
 main_col, profile_col = st.columns([4, 1])
 
 with profile_col:
@@ -151,60 +135,6 @@ with st.sidebar.expander("➕ Thêm thành viên"):
     c.execute("SELECT * FROM members")
     rows = c.fetchall()
 
-st.subheader("👥 Danh sách thành viên")
-
-cols = st.columns(3)   # 3 hồ sơ trên 1 hàng
-
-for idx, row in enumerate(rows):
-
-    with cols[idx % 3]:
-
-        st.markdown(
-            f"""
-            <div style="
-                background-color:{row[4] if len(row) > 4 else "#4CAF50"};
-                padding:15px;
-                border-radius:15px;
-                text-align:center;
-                min-height:250px;
-                box-shadow:2px 2px 8px rgba(0,0,0,0.2);
-            ">
-                <h3>{row[1]}</h3>
-                <h4>{row[2]}</h4>
-                <p>{row[3]}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        if st.button(
-            f"🗑️ Xóa {row[1]}",
-            key=f"delete_{row[0]}"
-        ):
-            c.execute(
-                "DELETE FROM members WHERE id=?",
-                (row[0],)
-            )
-
-            conn.commit()
-            st.rerun()
-
-            st.write("**Vai trò:**", row[2])
-            st.write(row[3])
-
-            if st.button(
-                f"🗑️ Xóa {row[0]}",
-                key=f"delete_{row[0]}"
-            ):
-
-                c.execute(
-                    "DELETE FROM members WHERE id=?",
-                    (row[0],)
-                )
-
-                conn.commit()
-
-                st.rerun()
 # =============================
 # MỤC LỤC TƯƠNG TÁC
 # =============================
@@ -281,7 +211,7 @@ if members:
             st.markdown(
                 f"""
                 <div style="
-                    background-color:{member[4]};
+                    background-color:{member[4] if len(member) > 4 else "#4CAF50"};
                     padding:20px;
                     border-radius:15px;
                     text-align:center;

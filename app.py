@@ -408,8 +408,8 @@ st.download_button(
     # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN
     # =============================
-    st.markdown('<div id="chart"></div>', unsafe_allow_html=True)
-    st.subheader("📈 Giá đóng cửa và Log Return")
+st.markdown('<div id="chart"></div>', unsafe_allow_html=True)
+st.subheader("📈 Giá đóng cửa và Log Return")
 
     fig, ax = plt.subplots(
         2,

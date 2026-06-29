@@ -410,10 +410,8 @@ if run:
     # =============================
 st.markdown('<div id="data"></div>', unsafe_allow_html=True)
 st.subheader("📄 Dữ liệu")
-
 st.dataframe(df)
 csv = df.to_csv().encode("utf-8")
-
 st.download_button(
     "📥 Tải dữ liệu CSV",
     data=csv,

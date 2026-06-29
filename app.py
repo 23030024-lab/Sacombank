@@ -20,52 +20,12 @@ st.set_page_config(
 # LOGO
 # =============================
 st.image("logo.jpg")
-
 # =============================
 # TIÊU ĐỀ
 # =============================
 st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
 st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
-# =============================
-# HỒ SƠ THÀNH VIÊN CÓ THỂ CHỈNH SỬA TRÊN WEB
-# =============================
 
-with st.expander("👤 Hồ sơ thành viên", expanded=False):
-
-    # Tải ảnh từ máy tính
-    uploaded_photo = st.file_uploader(
-        "Tải ảnh đại diện",
-        type=["jpg", "jpeg", "png"]
-    )
-
-    # Nhập thông tin
-    member_name = st.text_input(
-        "Họ và tên",
-        value="HUỲNH THỊ NGỌC TIÊN"
-    )
-
-    member_role = st.text_input(
-        "Đảm nhận công việc",
-        value="Phát triển ứng dụng"
-    )
-
-    member_bio = st.text_area(
-        "Chức vụ",
-        value="""
-Sinh viên ngành Công nghệ thông tin.
-Yêu thích Python, phân tích dữ liệu và chứng khoán.
-"""
-    )
-
-    st.markdown("---")
-    st.subheader("📌 Xem trước hồ sơ")
-
-    if uploaded_photo is not None:
-        st.image(uploaded_photo, width=300)
-
-    st.markdown(f"### {member_name}")
-    st.write("**Vai trò:**", member_role)
-    st.write(member_bio)
 # =============================
 # KẾT NỐI SQLITE
 # =============================

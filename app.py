@@ -49,7 +49,7 @@ with st.expander("👤 Hồ sơ thành viên", expanded=False):
     )
 
     member_bio = st.text_area(
-        "Tiểu sử",
+        "Chức vụ",
         value="""
 Sinh viên ngành Công nghệ thông tin.
 Yêu thích Python, phân tích dữ liệu và chứng khoán.

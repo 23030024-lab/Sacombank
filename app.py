@@ -52,7 +52,7 @@ with profile_col:
 
         name = st.text_input("Họ tên")
         role = st.text_input("Vai trò")
-        bio = st.text_area("Tiểu sử")
+        bio = st.text_area("Chức vụ")
 
         if st.button("💾 Lưu hồ sơ"):
 

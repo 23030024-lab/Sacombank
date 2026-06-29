@@ -124,7 +124,6 @@ if run:
     ax[0].set_ylabel("VND")
     ax[0].legend()
     ax[0].grid(True)
-
     ax[1].plot(
         df.index,
         df["log_ret"],

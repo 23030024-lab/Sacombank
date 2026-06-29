@@ -433,15 +433,15 @@ fig, ax = plt.subplots(
     )
 
 ax[0].plot(
-        df.index,
-        df["Close"],
+            df.index,
+            df["Close"],
     color="red",
     linewidth=2,
     label="Close Price"
     )
 ax[0].plot(
-df.index,
-df["MA20"],
+            df.index,
+            df["MA20"],
 linewidth=2,
 label="MA20"
     )

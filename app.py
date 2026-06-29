@@ -44,7 +44,7 @@ with st.expander("👤 Hồ sơ thành viên", expanded=False):
     )
 
     member_role = st.text_input(
-        "Vai trò",
+        "Đảm nhận công việc",
         value="Phát triển ứng dụng"
     )
 

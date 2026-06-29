@@ -27,6 +27,45 @@ st.image("logo.jpg")
 # =============================
 st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
 st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
+st.markdown("---")
+
+col1, col2, col3 = st.columns(3)
+
+# Tổng thành viên
+c.execute("SELECT COUNT(*) FROM members")
+tong_tv = c.fetchone()[0]
+
+# Tổng lượt phân tích
+c.execute("SELECT COUNT(*) FROM history")
+tong_pt = c.fetchone()[0]
+
+# Mã cổ phiếu phổ biến nhất
+c.execute("""
+SELECT ticker, COUNT(*)
+FROM history
+GROUP BY ticker
+ORDER BY COUNT(*) DESC
+LIMIT 1
+""")
+
+top = c.fetchone()
+
+ma_hot = top[0] if top else "Chưa có"
+
+col1.metric(
+    "👥 Thành viên",
+    tong_tv
+)
+
+col2.metric(
+    "📈 Lượt phân tích",
+    tong_pt
+)
+
+col3.metric(
+    "🔥 Mã HOT",
+    ma_hot
+)
 
 main_col, profile_col = st.columns([4, 1])
 
@@ -75,6 +114,19 @@ CREATE TABLE IF NOT EXISTS members(
     role TEXT,
     bio TEXT,
     color TEXT
+)
+""")
+
+conn.commit()
+# =============================
+# DATABASE LỊCH SỬ PHÂN TÍCH
+# =============================
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS history(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticker TEXT,
+    analysis_date TEXT
 )
 """)
 
@@ -268,6 +320,16 @@ run = st.button(
 # =============================
 if run:
 
+    c.execute(
+        """
+        INSERT INTO history(ticker, analysis_date)
+        VALUES (?, datetime('now'))
+        """,
+        (ticker,)
+    )
+
+    conn.commit()
+
     with st.spinner("Đang tải dữ liệu..."):
 
         df = yf.download(
@@ -302,6 +364,30 @@ if run:
     df["log_ret"] = np.log(
         df["Close"] / df["Close"].shift(1)
     )
+    df["MA20"] = (
+    df["Close"]
+    .rolling(20)
+    .mean()
+)
+
+df["MA50"] = (
+    df["Close"]
+    .rolling(50)
+    .mean()
+)
+delta = df["Close"].diff()
+
+gain = delta.where(delta > 0, 0)
+
+loss = -delta.where(delta < 0, 0)
+
+avg_gain = gain.rolling(14).mean()
+
+avg_loss = loss.rolling(14).mean()
+
+rs = avg_gain / avg_loss
+
+df["RSI"] = 100 - (100 / (1 + rs))
 
     # =============================
     # HIỂN THỊ DỮ LIỆU
@@ -310,6 +396,14 @@ if run:
     st.subheader("📄 Dữ liệu")
 
     st.dataframe(df)
+csv = df.to_csv().encode("utf-8")
+
+st.download_button(
+    "📥 Tải dữ liệu CSV",
+    data=csv,
+    file_name="du_lieu_co_phieu.csv",
+    mime="text/csv"
+)
 
     # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN
@@ -331,6 +425,19 @@ if run:
         linewidth=2,
         label="Close Price"
     )
+ax[0].plot(
+    df.index,
+    df["MA20"],
+    linewidth=2,
+    label="MA20"
+)
+
+ax[0].plot(
+    df.index,
+    df["MA50"],
+    linewidth=2,
+    label="MA50"
+)
 
     ax[0].set_title("Giá đóng cửa")
     ax[0].set_ylabel("VND")
@@ -353,6 +460,51 @@ if run:
     plt.tight_layout()
 
     st.pyplot(fig)
+st.subheader("📊 Chỉ báo RSI")
+
+fig_rsi, ax_rsi = plt.subplots(
+    figsize=(10,4)
+)
+
+ax_rsi.plot(
+    df.index,
+    df["RSI"]
+)
+
+ax_rsi.axhline(
+    70,
+    linestyle="--"
+)
+
+ax_rsi.axhline(
+    30,
+    linestyle="--"
+)
+
+ax_rsi.set_title("RSI")
+
+ax_rsi.grid(True)
+
+st.pyplot(fig_rsi)
+rsi = df["RSI"].iloc[-1]
+
+if rsi > 70:
+
+    st.error(
+        "🔴 Khuyến nghị: BÁN"
+    )
+
+elif rsi < 30:
+
+    st.success(
+        "🟢 Khuyến nghị: MUA"
+    )
+
+else:
+
+    st.info(
+        "🟡 Khuyến nghị: GIỮ"
+    )
 
     # =============================
     # BIỂU ĐỒ NẾN

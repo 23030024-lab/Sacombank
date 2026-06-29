@@ -25,6 +25,22 @@ st.image("logo.jpg")
 # =============================
 st.title("📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL")
 st.subheader("HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9")
+# =============================
+# MỤC LỤC TƯƠNG TÁC
+# =============================
+with st.sidebar:
+    st.title("☰ MỤC LỤC")
+
+    menu = st.radio(
+        "Chọn nội dung",
+        [
+            "📋 Thông tin đầu vào",
+            "📄 Dữ liệu",
+            "📈 Giá đóng cửa và Log Return",
+            "🕯️ Biểu đồ nến",
+            "📊 Kết quả Mann-Kendall"
+        ]
+    )
 
 st.markdown("---")
 # =============================
@@ -45,10 +61,40 @@ with st.sidebar:
 
     st.markdown("---")
     st.success("Ứng dụng phân tích cổ phiếu")
+    if menu == "📋 Thông tin đầu vào":
+    st.markdown(
+        "<script>window.location.hash='input';</script>",
+        unsafe_allow_html=True
+    )
+
+elif menu == "📄 Dữ liệu":
+    st.markdown(
+        "<script>window.location.hash='data';</script>",
+        unsafe_allow_html=True
+    )
+
+elif menu == "📈 Giá đóng cửa và Log Return":
+    st.markdown(
+        "<script>window.location.hash='chart';</script>",
+        unsafe_allow_html=True
+    )
+
+elif menu == "🕯️ Biểu đồ nến":
+    st.markdown(
+        "<script>window.location.hash='candle';</script>",
+        unsafe_allow_html=True
+    )
+
+elif menu == "📊 Kết quả Mann-Kendall":
+    st.markdown(
+        "<script>window.location.hash='mk';</script>",
+        unsafe_allow_html=True
+    )
 
 # =============================
 # THÔNG TIN ĐẦU VÀO (DẠNG DỌC)
 # =============================
+st.markdown('<div id="input"></div>', unsafe_allow_html=True)
 st.header("📋 Thông tin đầu vào")
 
 ticker = st.text_input(
@@ -114,6 +160,7 @@ if run:
     # =============================
     # HIỂN THỊ DỮ LIỆU
     # =============================
+    st.markdown('<div id="data"></div>', unsafe_allow_html=True)
     st.subheader("📄 Dữ liệu")
 
     st.dataframe(df)
@@ -121,6 +168,7 @@ if run:
     # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN
     # =============================
+    st.markdown('<div id="chart"></div>', unsafe_allow_html=True)
     st.subheader("📈 Giá đóng cửa và Log Return")
 
     fig, ax = plt.subplots(
@@ -163,6 +211,7 @@ if run:
     # =============================
     # BIỂU ĐỒ NẾN
     # =============================
+    st.markdown('<div id="candle"></div>', unsafe_allow_html=True)
     st.subheader("🕯️ Biểu đồ nến")
 
     fig2, _ = mpf.plot(
@@ -185,6 +234,7 @@ if run:
 
     result = mk.original_test(close_prices)
 
+    st.markdown('<div id="mk"></div>', unsafe_allow_html=True)
     st.subheader("📊 Kết quả kiểm định Mann-Kendall")
 
     col1, col2 = st.columns(2)

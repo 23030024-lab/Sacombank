@@ -439,27 +439,27 @@ ax[0].plot(
     label="MA50"
 )
 
-    ax[0].set_title("Giá đóng cửa")
-    ax[0].set_ylabel("VND")
-    ax[0].legend()
-    ax[0].grid(True)
-    ax[1].plot(
-        df.index,
-        df["log_ret"],
-        color="green",
-        linewidth=1.5,
-        label="Log Return"
-    )
+ax[0].set_title("Giá đóng cửa")
+ax[0].set_ylabel("VND")
+ax[0].legend()
+ax[0].grid(True)
+ax[1].plot(
+    df.index,
+    df["log_ret"],
+    color="green",
+    linewidth=1.5,
+    label="Log Return"
+)
 
-    ax[1].set_title("Log Return")
-    ax[1].set_ylabel("Return")
-    ax[1].set_xlabel("Date")
-    ax[1].legend()
-    ax[1].grid(True)
+ax[1].set_title("Log Return")
+ax[1].set_ylabel("Return")
+ax[1].set_xlabel("Date")
+ax[1].legend()
+ax[1].grid(True)
 
-    plt.tight_layout()
+plt.tight_layout()
 
-    st.pyplot(fig)
+st.pyplot(fig)
 st.subheader("📊 Chỉ báo RSI")
 
 fig_rsi, ax_rsi = plt.subplots(

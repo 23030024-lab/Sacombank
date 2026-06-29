@@ -360,98 +360,48 @@ if run:
         st.stop()
 
     # =============================
-    # XỬ LÝ DỮ LIỆU
-    # =============================
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = df.columns.droplevel("Ticker")
-
-    full_date_range = pd.date_range(
-        start=df.index.min(),
-        end=df.index.max(),
-        freq="D"
-    )
-
-    df = df.reindex(full_date_range)
-
-    df = df.ffill()
-
-    df["simple_ret"] = df["Close"].pct_change()
-
-    df["log_ret"] = np.log(
-        df["Close"] / df["Close"].shift(1)
-    )
-    df["MA20"] = (
-    df["Close"]
-    .rolling(20)
-    .mean()
-    )
-
-    df["MA50"] = (
-    df["Close"]
-    .rolling(50)
-    .mean()
-    )
-    delta = df["Close"].diff()
-
-    gain = delta.where(delta > 0, 0)
-
-    loss = -delta.where(delta < 0, 0)
-
-    avg_gain = gain.rolling(14).mean()
-
-    avg_loss = loss.rolling(14).mean()
-
-    rs = avg_gain / avg_loss
-
-    df["RSI"] = 100 - (100 / (1 + rs))
-
-    # =============================
-    # HIỂN THỊ DỮ LIỆU
-    # =============================
-    st.markdown('<div id="data"></div>', unsafe_allow_html=True)
-    st.subheader("📄 Dữ liệu")
-    st.dataframe(df)
-    csv = df.to_csv().encode("utf-8")
-    st.download_button(
-    "📥 Tải dữ liệu CSV",
-    data=csv,
-    file_name="du_lieu_co_phieu.csv",
-    mime="text/csv"
-)
-
-    # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN
     # =============================
-st.markdown('<div id="chart"></div>', unsafe_allow_html=True)
-st.subheader("📈 Giá đóng cửa và Log Return")
+    st.markdown(
+        '<div id="chart"></div>',
+        unsafe_allow_html=True
+    )
 
-fig, ax = plt.subplots(
+    st.subheader(
+        "📈 Giá đóng cửa và Log Return"
+    )
+
+    fig, ax = plt.subplots(
         2,
         1,
         figsize=(10, 8),
         sharex=True
-)
+    )
 
-ax[0].plot(
-                        df.index,
-                        df["Close"],
+    ax[0].plot(
+        df.index,
+        df["Close"],
+        color="red",
+        linewidth=2,
+        label="Close Price"
+    )
     color="red",
     linewidth=2,
     label="Close Price"
-)
-ax[0].plot(
-    df.index,
-    df["MA20"],
-    linewidth=2,
-    label="MA20"
-)
+    )
+    ax[0].plot(
+        df.index,
+        df["MA20"],
+        linewidth=2,
+        label="MA20"
+    )
 
-ax[0].plot(
-    df.index,
-    df["MA50"],
-    linewidth=2,
-    label="MA50"
-)
+    ax[0].plot(
+        df.index,
+        df["MA50"],
+        linewidth=2,
+        label="MA50"
+    )
 
 ax[0].set_title("Giá đóng cửa")
 ax[0].set_ylabel("VND")

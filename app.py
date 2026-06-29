@@ -433,37 +433,37 @@ fig, ax = plt.subplots(
     )
 
 ax[0].plot(
-        df.index,
-        df["Close"],
-        color="red",
-        linewidth=2,
-        label="Close Price"
+df.index,
+df["Close"],
+color="red",
+linewidth=2,
+label="Close Price"
     )
 ax[0].plot(
-    df.index,
-    df["MA20"],
-    linewidth=2,
-    label="MA20"
-)
+df.index,
+df["MA20"],
+linewidth=2,
+label="MA20"
+    )
 
 ax[0].plot(
-    df.index,
-    df["MA50"],
-    linewidth=2,
-    label="MA50"
-)
+df.index,
+df["MA50"],
+linewidth=2,
+label="MA50"
+    )
 
 ax[0].set_title("Giá đóng cửa")
 ax[0].set_ylabel("VND")
 ax[0].legend()
 ax[0].grid(True)
 ax[1].plot(
-    df.index,
-    df["log_ret"],
-    color="green",
-    linewidth=1.5,
-    label="Log Return"
-)
+df.index,
+df["log_ret"],
+color="green",
+linewidth=1.5,
+label="Log Return"
+    )
 
 ax[1].set_title("Log Return")
 ax[1].set_ylabel("Return")

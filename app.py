@@ -31,6 +31,7 @@ st.markdown("---")
 
 col1, col2, col3 = st.columns(3)
 
+c = conn.cursor()
 # Tổng thành viên
 c.execute("SELECT COUNT(*) FROM members")
 tong_tv = c.fetchone()[0]
@@ -105,7 +106,6 @@ conn = sqlite3.connect(
     check_same_thread=False
 )
 
-c = conn.cursor()
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS members(

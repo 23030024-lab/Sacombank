@@ -358,6 +358,45 @@ if run:
     if df.empty:
         st.error("Không tìm thấy dữ liệu.")
         st.stop()
+        # Xử lý dữ liệu
+if isinstance(df.columns, pd.MultiIndex):
+    df.columns = df.columns.droplevel("Ticker")
+
+full_date_range = pd.date_range(
+    start=df.index.min(),
+    end=df.index.max(),
+    freq="D"
+)
+
+df = df.reindex(full_date_range)
+df = df.ffill()
+
+df["simple_ret"] = df["Close"].pct_change()
+
+df["log_ret"] = np.log(
+    df["Close"] / df["Close"].shift(1)
+)
+
+# MA20
+df["MA20"] = df["Close"].rolling(20).mean()
+
+# MA50
+df["MA50"] = df["Close"].rolling(50).mean()
+
+# RSI
+delta = df["Close"].diff()
+
+gain = delta.where(delta > 0, 0)
+
+loss = -delta.where(delta < 0, 0)
+
+avg_gain = gain.rolling(14).mean()
+
+avg_loss = loss.rolling(14).mean()
+
+rs = avg_gain / avg_loss
+
+df["RSI"] = 100 - (100 / (1 + rs))
 
     # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN

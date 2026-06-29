@@ -73,23 +73,23 @@ with st.sidebar:
             unsafe_allow_html=True
         )
 
-elif menu == "📈 Giá đóng cửa và Log Return":
-    st.markdown(
-        "<script>window.location.hash='chart';</script>",
-        unsafe_allow_html=True
-    )
+    elif menu == "📈 Giá đóng cửa và Log Return":
+        st.markdown(
+            "<script>window.location.hash='chart';</script>",
+            unsafe_allow_html=True
+        )
 
-elif menu == "🕯️ Biểu đồ nến":
-    st.markdown(
-        "<script>window.location.hash='candle';</script>",
-        unsafe_allow_html=True
-    )
+    elif menu == "🕯️ Biểu đồ nến":
+        st.markdown(
+            "<script>window.location.hash='candle';</script>",
+            unsafe_allow_html=True
+        )
 
-elif menu == "📊 Kết quả Mann-Kendall":
-    st.markdown(
-        "<script>window.location.hash='mk';</script>",
-        unsafe_allow_html=True
-    )
+    elif menu == "📊 Kết quả Mann-Kendall":
+        st.markdown(
+            "<script>window.location.hash='mk';</script>",
+            unsafe_allow_html=True
+        )
 
 # =============================
 # THÔNG TIN ĐẦU VÀO (DẠNG DỌC)

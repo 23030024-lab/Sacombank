@@ -411,14 +411,14 @@ st.download_button(
 st.markdown('<div id="chart"></div>', unsafe_allow_html=True)
 st.subheader("📈 Giá đóng cửa và Log Return")
 
-    fig, ax = plt.subplots(
+fig, ax = plt.subplots(
         2,
         1,
         figsize=(10, 8),
         sharex=True
     )
 
-    ax[0].plot(
+ax[0].plot(
         df.index,
         df["Close"],
         color="red",

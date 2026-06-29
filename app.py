@@ -58,7 +58,7 @@ with st.expander("👥 Thông tin thành viên", expanded=False):
     )
 
     if member == "HUỲNH THỊ NGỌC TIÊN":
-        st.image("tien.jpg", width=300)
+        st.image("", width=300)
 
         st.markdown("""
         ### 👩 HUỲNH THỊ NGỌC TIÊN
@@ -76,7 +76,7 @@ with st.expander("👥 Thông tin thành viên", expanded=False):
         """)
 
     elif member == "NGUYỄN VĂN A":
-        st.image("an.jpg", width=300)
+        st.image("", width=300)
 
         st.markdown("""
         ### 👨 NGUYỄN VĂN A
@@ -91,7 +91,7 @@ with st.expander("👥 Thông tin thành viên", expanded=False):
         """)
 
     elif member == "TRẦN THỊ B":
-        st.image("minh.jpg", width=300)
+        st.image("", width=300)
 
         st.markdown("""
         ### 👩 TRẦN THỊ B

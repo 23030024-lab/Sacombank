@@ -5,6 +5,7 @@ import numpy as np
 import pymannkendall as mk
 import matplotlib.pyplot as plt
 import mplfinance as mpf
+import sqlite3
 
 # =============================
 # CẤU HÌNH TRANG
@@ -65,6 +66,71 @@ Yêu thích Python, phân tích dữ liệu và chứng khoán.
     st.markdown(f"### {member_name}")
     st.write("**Vai trò:**", member_role)
     st.write(member_bio)
+# =============================
+# KẾT NỐI SQLITE
+# =============================
+conn = sqlite3.connect("members.db", check_same_thread=False)
+c = conn.cursor()
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS members (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    role TEXT,
+    bio TEXT
+)
+""")
+
+conn.commit()
+main_col, profile_col = st.columns([4, 1])
+
+with profile_col:
+
+    st.subheader("👥 Thành viên")
+
+    with st.expander("➕ Thêm thành viên"):
+
+        name = st.text_input("Họ tên")
+        role = st.text_input("Vai trò")
+        bio = st.text_area("Tiểu sử")
+
+        if st.button("💾 Lưu hồ sơ"):
+
+            c.execute(
+                "INSERT INTO members(name, role, bio) VALUES (?, ?, ?)",
+                (name, role, bio)
+            )
+
+            conn.commit()
+
+            st.success("Đã lưu thành công!")
+
+    st.markdown("---")
+
+    # Hiển thị tất cả thành viên
+    c.execute("SELECT * FROM members")
+    rows = c.fetchall()
+
+    for row in rows:
+
+        with st.expander(f"👤 {row[1]}"):
+
+            st.write("**Vai trò:**", row[2])
+            st.write(row[3])
+
+            if st.button(
+                f"🗑️ Xóa {row[0]}",
+                key=f"delete_{row[0]}"
+            ):
+
+                c.execute(
+                    "DELETE FROM members WHERE id=?",
+                    (row[0],)
+                )
+
+                conn.commit()
+
+                st.rerun()
 # =============================
 # MỤC LỤC TƯƠNG TÁC
 # =============================

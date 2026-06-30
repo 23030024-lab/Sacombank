@@ -62,7 +62,7 @@ st.title(
 )
 
 st.subheader(
-    "HUỲNH THỊ NGỌC TIÊN ĐỀ TÀI 9"
+    "NHÓM ĐỀ TÀI 9"
 )
 
 # =============================

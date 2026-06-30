@@ -53,6 +53,51 @@ CREATE TABLE IF NOT EXISTS history(
 """)
 
 conn.commit()
+# =============================
+# THÊM THÀNH VIÊN MẶC ĐỊNH
+# (chỉ thêm 1 lần duy nhất)
+# =============================
+
+c.execute("SELECT COUNT(*) FROM members")
+so_tv = c.fetchone()[0]
+
+if so_tv == 0:
+
+    danh_sach_tv = [
+
+        (
+            "Đặng Gia Hân",
+            "👑 Trưởng nhóm",
+            "Phụ trách điều phối dự án",
+            "#4CAF50"
+        ),
+
+        (
+            "Trần Thị B",
+            "💻 Lập trình viên",
+            "Phát triển ứng dụng Streamlit",
+            "#2196F3"
+        ),
+
+        (
+            "Lê Văn C",
+            "📊 Phân tích dữ liệu",
+            "Phân tích dữ liệu cổ phiếu",
+            "#FF9800"
+        )
+
+    ]
+
+    c.executemany(
+        """
+        INSERT INTO members
+        (name, role, bio, color)
+        VALUES (?, ?, ?, ?)
+        """,
+        danh_sach_tv
+    )
+
+    conn.commit()
 
 # =============================
 # TIÊU ĐỀ

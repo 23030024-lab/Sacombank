@@ -381,7 +381,7 @@ if run:
     df["MA20"] = df["Close"].rolling(20).mean()
 
 # MA50
-df["MA50"] = df["Close"].rolling(50).mean()
+    df["MA50"] = df["Close"].rolling(50).mean()
 
 # RSI
 delta = df["Close"].diff()

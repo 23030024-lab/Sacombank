@@ -410,7 +410,7 @@ st.subheader(
         "📈 Giá đóng cửa và Log Return"
     )
 
-    fig, ax = plt.subplots(
+fig, ax = plt.subplots(
         2,
         1,
         figsize=(10, 8),

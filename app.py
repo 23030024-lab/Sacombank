@@ -417,7 +417,7 @@ fig, ax = plt.subplots(
         sharex=True
     )
 
-    ax[0].plot(
+ax[0].plot(
         df.index,
         df["Close"],
         color="red",
@@ -425,14 +425,14 @@ fig, ax = plt.subplots(
         label="Close Price"
     )
     
-    ax[0].plot(
+ax[0].plot(
         df.index,
         df["MA20"],
         linewidth=2,
         label="MA20"
     )
 
-    ax[0].plot(
+ax[0].plot(
         df.index,
         df["MA50"],
         linewidth=2,

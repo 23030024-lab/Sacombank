@@ -378,7 +378,7 @@ if run:
 )
 
 # MA20
-df["MA20"] = df["Close"].rolling(20).mean()
+    df["MA20"] = df["Close"].rolling(20).mean()
 
 # MA50
 df["MA50"] = df["Close"].rolling(50).mean()

@@ -401,7 +401,7 @@ df["RSI"] = 100 - (100 / (1 + rs))
     # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN
     # =============================
-    st.markdown(
+st.markdown(
         '<div id="chart"></div>',
         unsafe_allow_html=True
     )

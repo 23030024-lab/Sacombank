@@ -368,13 +368,13 @@ if run:
         freq="D"
     )
 
-df = df.reindex(full_date_range)
-df = df.ffill()
+    df = df.reindex(full_date_range)
+    df = df.ffill()
 
-df["simple_ret"] = df["Close"].pct_change()
+    df["simple_ret"] = df["Close"].pct_change()
 
-df["log_ret"] = np.log(
-df["Close"] / df["Close"].shift(1)
+    df["log_ret"] = np.log(
+    df["Close"] / df["Close"].shift(1)
 )
 
 # MA20

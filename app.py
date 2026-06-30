@@ -417,7 +417,7 @@ fig, ax = plt.subplots(
         sharex=True
     )
 
-ax[0].plot(
+    ax[0].plot(
         df.index,
         df["Close"],
         color="red",

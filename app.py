@@ -58,7 +58,7 @@ conn.commit()
 # TIÊU ĐỀ
 # =============================
 st.title(
-    "📈 TRỰC QUAN HÓA GIÁ CỔ PHIẾU VÀ KIỂM ĐỊNH MANN-KENDALL"
+    "📈 APP DỰ BÁO CỔ PHIẾU NGÂN HÀNG"
 )
 
 st.subheader(

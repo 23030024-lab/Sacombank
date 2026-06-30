@@ -336,6 +336,7 @@ run = st.button(
 # =============================
 if run:
 
+    # Lưu lịch sử phân tích
     c.execute(
         """
         INSERT INTO history(ticker, analysis_date)
@@ -346,6 +347,7 @@ if run:
 
     conn.commit()
 
+    # Tải dữ liệu
     with st.spinner("Đang tải dữ liệu..."):
 
         df = yf.download(
@@ -358,7 +360,10 @@ if run:
     if df.empty:
         st.error("Không tìm thấy dữ liệu.")
         st.stop()
-        # Xử lý dữ liệu
+
+    # =============================
+    # XỬ LÝ DỮ LIỆU
+    # =============================
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.droplevel("Ticker")
 
@@ -374,24 +379,22 @@ if run:
     df["simple_ret"] = df["Close"].pct_change()
 
     df["log_ret"] = np.log(
-    df["Close"] / df["Close"].shift(1)
-)
+        df["Close"] / df["Close"].shift(1)
+    )
 
-# MA20
+    # MA20
     df["MA20"] = df["Close"].rolling(20).mean()
 
-# MA50
+    # MA50
     df["MA50"] = df["Close"].rolling(50).mean()
 
-# RSI
+    # RSI
     delta = df["Close"].diff()
 
     gain = delta.where(delta > 0, 0)
-
     loss = -delta.where(delta < 0, 0)
 
     avg_gain = gain.rolling(14).mean()
-
     avg_loss = loss.rolling(14).mean()
 
     rs = avg_gain / avg_loss
@@ -399,117 +402,138 @@ if run:
     df["RSI"] = 100 - (100 / (1 + rs))
 
     # =============================
+    # HIỂN THỊ DỮ LIỆU
+    # =============================
+    st.markdown(
+        '<div id="data"></div>',
+        unsafe_allow_html=True
+    )
+
+    st.subheader("📄 Dữ liệu")
+
+    st.dataframe(df)
+
+    csv = df.to_csv().encode("utf-8")
+
+    st.download_button(
+        "📥 Tải dữ liệu CSV",
+        data=csv,
+        file_name="du_lieu_co_phieu.csv",
+        mime="text/csv"
+    )
+
+    # =============================
     # BIỂU ĐỒ GIÁ & LOG RETURN
     # =============================
-st.markdown(
+    st.markdown(
         '<div id="chart"></div>',
         unsafe_allow_html=True
     )
 
-st.subheader(
+    st.subheader(
         "📈 Giá đóng cửa và Log Return"
     )
 
-fig, ax = plt.subplots(
+    fig, ax = plt.subplots(
         2,
         1,
         figsize=(10, 8),
         sharex=True
     )
 
-ax[0].plot(
-            df.index,
-            df["Close"],
-            color="red",
-            linewidth=2,
-            label="Close Price"
-)
-    
-ax[0].plot(
+    ax[0].plot(
+        df.index,
+        df["Close"],
+        color="red",
+        linewidth=2,
+        label="Close Price"
+    )
+
+    ax[0].plot(
         df.index,
         df["MA20"],
         linewidth=2,
         label="MA20"
     )
 
-ax[0].plot(
+    ax[0].plot(
         df.index,
         df["MA50"],
         linewidth=2,
         label="MA50"
     )
 
-ax[0].set_title("Giá đóng cửa")
-ax[0].set_ylabel("VND")
-ax[0].legend()
-ax[0].grid(True)
-ax[1].plot(
+    ax[0].set_title("Giá đóng cửa")
+    ax[0].set_ylabel("VND")
+    ax[0].legend()
+    ax[0].grid(True)
+
+    ax[1].plot(
         df.index,
         df["log_ret"],
         color="green",
         linewidth=1.5,
-    label="Log Return"
-        )
-
-ax[1].set_title("Log Return")
-ax[1].set_ylabel("Return")
-ax[1].set_xlabel("Date")
-ax[1].legend()
-ax[1].grid(True)
-
-plt.tight_layout()
-
-st.pyplot(fig)
-st.subheader("📊 Chỉ báo RSI")
-
-fig_rsi, ax_rsi = plt.subplots(
-    figsize=(10,4)
-)
-
-ax_rsi.plot(
-    df.index,
-    df["RSI"]
-)
-
-ax_rsi.axhline(
-    70,
-    linestyle="--"
-)
-
-ax_rsi.axhline(
-    30,
-    linestyle="--"
-)
-
-ax_rsi.set_title("RSI")
-
-ax_rsi.grid(True)
-
-st.pyplot(fig_rsi)
-rsi = df["RSI"].iloc[-1]
-
-if rsi > 70:
-
-    st.error(
-        "🔴 Khuyến nghị: BÁN"
+        label="Log Return"
     )
 
-elif rsi < 30:
+    ax[1].set_title("Log Return")
+    ax[1].set_ylabel("Return")
+    ax[1].set_xlabel("Date")
+    ax[1].legend()
+    ax[1].grid(True)
 
-    st.success(
-        "🟢 Khuyến nghị: MUA"
+    plt.tight_layout()
+
+    st.pyplot(fig)
+
+    # =============================
+    # CHỈ BÁO RSI
+    # =============================
+    st.subheader("📊 Chỉ báo RSI")
+
+    fig_rsi, ax_rsi = plt.subplots(
+        figsize=(10, 4)
     )
 
-else:
-
-    st.info(
-        "🟡 Khuyến nghị: GIỮ"
+    ax_rsi.plot(
+        df.index,
+        df["RSI"]
     )
+
+    ax_rsi.axhline(
+        70,
+        linestyle="--"
+    )
+
+    ax_rsi.axhline(
+        30,
+        linestyle="--"
+    )
+
+    ax_rsi.set_title("RSI")
+    ax_rsi.grid(True)
+
+    st.pyplot(fig_rsi)
+
+    rsi = df["RSI"].iloc[-1]
+
+    if rsi > 70:
+        st.error("🔴 Khuyến nghị: BÁN")
+
+    elif rsi < 30:
+        st.success("🟢 Khuyến nghị: MUA")
+
+    else:
+        st.info("🟡 Khuyến nghị: GIỮ")
 
     # =============================
     # BIỂU ĐỒ NẾN
     # =============================
-    st.markdown('<div id="candle"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div id="candle"></div>',
+        unsafe_allow_html=True
+    )
+
     st.subheader("🕯️ Biểu đồ nến")
 
     fig2, _ = mpf.plot(
@@ -532,8 +556,14 @@ else:
 
     result = mk.original_test(close_prices)
 
-    st.markdown('<div id="mk"></div>', unsafe_allow_html=True)
-    st.subheader("📊 Kết quả kiểm định Mann-Kendall")
+    st.markdown(
+        '<div id="mk"></div>',
+        unsafe_allow_html=True
+    )
+
+    st.subheader(
+        "📊 Kết quả kiểm định Mann-Kendall"
+    )
 
     col1, col2 = st.columns(2)
 
@@ -548,11 +578,23 @@ else:
     st.markdown("---")
 
     if result.p < 0.05:
+
         if result.trend == "increasing":
-            st.success("Có xu hướng **TĂNG** có ý nghĩa thống kê (p < 0.05).")
+            st.success(
+                "Có xu hướng TĂNG có ý nghĩa thống kê."
+            )
+
         elif result.trend == "decreasing":
-            st.success("Có xu hướng **GIẢM** có ý nghĩa thống kê (p < 0.05).")
+            st.success(
+                "Có xu hướng GIẢM có ý nghĩa thống kê."
+            )
+
         else:
-            st.success("Có xu hướng đáng kể về mặt thống kê.")
+            st.success(
+                "Có xu hướng đáng kể về mặt thống kê."
+            )
+
     else:
-        st.warning("Không phát hiện xu hướng có ý nghĩa thống kê (p ≥ 0.05).")
+        st.warning(
+            "Không phát hiện xu hướng có ý nghĩa thống kê."
+        )

@@ -359,7 +359,7 @@ if run:
         st.error("Không tìm thấy dữ liệu.")
         st.stop()
         # Xử lý dữ liệu
-if isinstance(df.columns, pd.MultiIndex):
+    if isinstance(df.columns, pd.MultiIndex):
     df.columns = df.columns.droplevel("Ticker")
 
 full_date_range = pd.date_range(

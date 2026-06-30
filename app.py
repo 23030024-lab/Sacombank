@@ -88,7 +88,7 @@ if so_tv == 0:
 
     ]
 
-        c.executemany(
+    c.executemany(
         """
         INSERT INTO members
         (name, role, bio, color)

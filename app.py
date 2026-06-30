@@ -406,7 +406,7 @@ st.markdown(
         unsafe_allow_html=True
     )
 
-    st.subheader(
+st.subheader(
         "📈 Giá đóng cửa và Log Return"
     )
 

@@ -439,11 +439,11 @@ ax[0].plot(
         label="MA50"
     )
 
-    ax[0].set_title("Giá đóng cửa")
-    ax[0].set_ylabel("VND")
-    ax[0].legend()
-    ax[0].grid(True)
-    ax[1].plot(
+ax[0].set_title("Giá đóng cửa")
+ax[0].set_ylabel("VND")
+ax[0].legend()
+ax[0].grid(True)
+ax[1].plot(
         df.index,
         df["log_ret"],
         color="green",
@@ -451,11 +451,11 @@ ax[0].plot(
     label="Log Return"
         )
 
-    ax[1].set_title("Log Return")
-    ax[1].set_ylabel("Return")
-    ax[1].set_xlabel("Date")
-    ax[1].legend()
-    ax[1].grid(True)
+ax[1].set_title("Log Return")
+ax[1].set_ylabel("Return")
+ax[1].set_xlabel("Date")
+ax[1].legend()
+ax[1].grid(True)
 
     plt.tight_layout()
 

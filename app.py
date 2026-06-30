@@ -88,7 +88,7 @@ if so_tv == 0:
 
     ]
 
-    c.executemany(
+        c.executemany(
         """
         INSERT INTO members
         (name, role, bio, color)
@@ -96,8 +96,9 @@ if so_tv == 0:
         """,
         danh_sach_tv
     )
-
     conn.commit()
+    
+
 
 # =============================
 # TIÊU ĐỀ

@@ -418,11 +418,11 @@ fig, ax = plt.subplots(
     )
 
 ax[0].plot(
-    df.index,
-    df["Close"],
-    color="red",
-    linewidth=2,
-    label="Close Price"
+            df.index,
+            df["Close"],
+            color="red",
+            linewidth=2,
+            label="Close Price"
 )
     
 ax[0].plot(

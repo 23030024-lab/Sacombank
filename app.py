@@ -362,11 +362,11 @@ if run:
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.droplevel("Ticker")
 
-full_date_range = pd.date_range(
-    start=df.index.min(),
-    end=df.index.max(),
-    freq="D"
-)
+    full_date_range = pd.date_range(
+        start=df.index.min(),
+        end=df.index.max(),
+        freq="D"
+    )
 
 df = df.reindex(full_date_range)
 df = df.ffill()

@@ -459,8 +459,8 @@ ax[1].grid(True)
 
 plt.tight_layout()
 
-    st.pyplot(fig)
-    st.subheader("📊 Chỉ báo RSI")
+st.pyplot(fig)
+st.subheader("📊 Chỉ báo RSI")
 
 fig_rsi, ax_rsi = plt.subplots(
     figsize=(10,4)

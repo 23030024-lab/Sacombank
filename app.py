@@ -360,7 +360,7 @@ if run:
         st.stop()
         # Xử lý dữ liệu
     if isinstance(df.columns, pd.MultiIndex):
-    df.columns = df.columns.droplevel("Ticker")
+        df.columns = df.columns.droplevel("Ticker")
 
 full_date_range = pd.date_range(
     start=df.index.min(),
@@ -368,13 +368,13 @@ full_date_range = pd.date_range(
     freq="D"
 )
 
-    df = df.reindex(full_date_range)
-    df = df.ffill()
+df = df.reindex(full_date_range)
+df = df.ffill()
 
-    df["simple_ret"] = df["Close"].pct_change()
+df["simple_ret"] = df["Close"].pct_change()
 
-    df["log_ret"] = np.log(
-    df["Close"] / df["Close"].shift(1)
+df["log_ret"] = np.log(
+df["Close"] / df["Close"].shift(1)
 )
 
 # MA20
